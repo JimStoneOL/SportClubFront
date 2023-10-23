@@ -39,7 +39,7 @@ export const AuthPage = () => {
       <div
         class="
           flex flex-col
-          bg-green-400
+          bg-gray-800
           shadow-md
           px-4
           sm:px-6

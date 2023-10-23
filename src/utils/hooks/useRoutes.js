@@ -5,6 +5,9 @@ import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 import { Seller } from "../component/Seller"
 import { Admin } from "../component/Admin"
+import { Basket } from "../component/Basket"
+import { OrderPage } from "../component/OrderPage"
+import { ProductPage } from "../component/ProductPage"
 
 
 
@@ -18,6 +21,12 @@ export const useRoutes=(isAuthenticated,role)=>{
              <Route path="/" exact>
                 <Seller/>
             </Route>
+            <Route path="/basket">
+                <Basket/>
+            </Route>
+            <Route path="/order">
+                <OrderPage/>
+            </Route>
             <Redirect to="/" />
         </Switch>
         )
@@ -28,6 +37,13 @@ export const useRoutes=(isAuthenticated,role)=>{
         <Switch>
              <Route path="/" exact>
                 <Admin/>
+            </Route>
+            <Route path="/basket">
+                <ProductPage/>
+            </Route>
+            
+            <Route path="/order">
+                <OrderPage/>
             </Route>
             <Redirect to="/" />
         </Switch>

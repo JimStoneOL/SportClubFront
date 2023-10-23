@@ -15,7 +15,7 @@ export const Navbar = () => {
 
   return(
     <>
-   <nav class="bg-white border-gray-200 dark:bg-gray-900">
+   <nav class="bg-white border-gray-200 dark:bg-gray-900 text-white">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
     <Link to={'/'} class="flex items-center">
@@ -28,12 +28,13 @@ export const Navbar = () => {
     </button>
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-        {/* <li>
-          <NavLink to={'/login'} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Войти в личный кабинет</NavLink>
-        </li> */}
-
+      { auth.isAuthenticated && <li>
+          <NavLink to={'/basket'} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Корзина</NavLink>
+        </li>}
+      {auth.isAuthenticated && <NavLink to={'/order'} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Заказы</NavLink>
+   }
       {auth.isAuthenticated ?  <li>
-          <button onClick={()=>{auth.logout()}} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-700 md:p-0 dark:text-white md:dark:hover:text-amber-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Выйти</button>
+          <button onClick={()=>{auth.logout()}} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Выйти</button>
         </li>: 
          <li>
       </li>

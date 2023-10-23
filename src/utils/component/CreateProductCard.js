@@ -3,6 +3,7 @@ import { UploadControl } from "./UploadControl"
 import axios from "axios"
 import { AuthContext } from "../context/AuthContext"
 import { useHttp } from "../hooks/http.hook"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 
 export const CreateProductCard=()=>{
 
@@ -10,6 +11,7 @@ export const CreateProductCard=()=>{
     const { request, error, clearError,loading} = useHttp()
     const [form,setForm]=useState({})
     const [file,setFile]=useState(null)
+    const history = useHistory()
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
@@ -44,6 +46,7 @@ export const CreateProductCard=()=>{
            )
     //   message('Изображение обновлено')
      } catch (e) {}
+     history.push('/basket')
      }
 
     return(<>
@@ -53,7 +56,7 @@ export const CreateProductCard=()=>{
       <div
         class="
           flex flex-col
-          bg-green-400
+          bg-gray-800
           shadow-md
           px-4
           sm:px-6
@@ -65,7 +68,7 @@ export const CreateProductCard=()=>{
           max-w-md
         "
       >
-        <div class="font-medium self-center text-xl sm:text-3xl text-gray-800">
+        <div class="font-medium self-center text-xl sm:text-3xl text-white">
           Создать продукт
         </div>
 

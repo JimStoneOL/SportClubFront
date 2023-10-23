@@ -5,12 +5,14 @@ import { useAuth } from '../../../utils/hooks/auth.hook'
 import { useHttp } from '../../../utils/hooks/http.hook'
 import { useMessage } from '../../../utils/hooks/message.hook'
 import logo from '../../../utils/img/logo.jpg'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export const RegisterPage=()=>{
 
 
   const auth = useContext(AuthContext)
   const message = useMessage()
+  const history = useHistory()
   const {loading, request, error, clearError} = useHttp()
   const [form, setForm] = useState({
    firstname:'',lastname:'', email: '', password: '',confirmPassword:''
@@ -29,8 +31,9 @@ export const RegisterPage=()=>{
   const registerHandler = async () => {
     try {
       const data = await request('http://localhost:8080/api/auth/signup', 'POST', {...form})
-      console.log(data)
-      message(data.message)
+      // console.log(data)
+      // message(data.message)
+      history.push('/')
     } catch (e) {}
   }
     return(
@@ -40,7 +43,7 @@ export const RegisterPage=()=>{
       <div
         class="
           flex flex-col
-          bg-green-400
+          bg-gray-800
           shadow-md
           px-4
           sm:px-6
