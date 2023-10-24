@@ -11,21 +11,7 @@ export const ProductCard=({data})=>{
   const { request, error, clearError,loading} = useHttp()
   const [basketStorage, setBasketStorage] = useLocalStorage("basketStorage", []);
   const [added,setAdded]=useState(!!basketStorage.find(item=>item.article===data.article))
-  // const [count,setCount]=useState(data.amount)
- 
-  // const increment=event=>{
-  //   setCount(count+1)
-  //   data.amount+=count
-  //   setBasketStorage([...basketStorage,data])
-  // }
-
-  // const decrement=event=>{
-  //   if(count>0){
-  //   setCount(count-1)
-  //   data.amount-=count
-  //   setBasketStorage([...basketStorage,data])
-  //   }
-  // }
+  const auth=useContext(AuthContext)
   
   const orderHandler=(article)=>{
     if(!added){
@@ -56,19 +42,8 @@ export const ProductCard=({data})=>{
             <p>Осталось: {data.count}</p>
             <p>Поставщик: {data.provider}</p>
         </div>
-        <button onClick={()=>orderHandler(data)} className="text-white bg-black rounded-full w-32 ">{added ? <div>Удалить</div> : <div>Добавить</div>}</button>
-        {/* {added && <>
-        
-          <div class="flex items-center justify-center bg-black text-white font-bold rounded-full my-4">
-  <button onClick={()=>decrement()} class=" rounded-l px-4 py-2">
-    -
-  </button>
-  <div class="border rounded py-2 px-4 text-center outline-none text-sm w-16">{count}</div>
-  <button onClick={()=>increment()} class="rounded-r px-4 py-2">
-    +
-  </button>
-</div>
-        </>} */}
+       {auth.isAuthenticated && auth.role==='ROLE_USER' && <button onClick={()=>orderHandler(data)} className="text-white bg-black rounded-full w-32 ">{added ? <div>Удалить</div> : <div>Добавить</div>}</button>}
+    
       </div>
     </div>
 

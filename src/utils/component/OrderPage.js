@@ -5,7 +5,7 @@ import { useHttp } from "../hooks/http.hook"
 export const OrderPage=()=>{
 
     const [orders,setOrders]=useState([])
-    const {token} = useContext(AuthContext)
+    const {token,role} = useContext(AuthContext)
     const { request, error, clearError,loading} = useHttp()
 
     const getOrders = useCallback(async () => {
@@ -14,7 +14,6 @@ export const OrderPage=()=>{
           const fetched = await request('http://localhost:8080/api/order/get/all', 'GET', null, {
             Authorization: `Bearer ${token}`
           })
-          console.log(fetched)
          setOrders(fetched)
         } catch (e) {}
       }, [token, request])
@@ -22,6 +21,16 @@ export const OrderPage=()=>{
       useEffect(()=>{
         getOrders()
       },[getOrders])
+
+      const pressHandler=async (id)=>{
+       
+        try {
+          const fetched = await request('http://localhost:8080/api/order/change/'+id, 'POST', null, {
+            Authorization: `Bearer ${token}`
+          })
+          getOrders()
+        } catch (e) {}
+      }
 
 
     return(<>
@@ -37,8 +46,10 @@ export const OrderPage=()=>{
             <p>Пункт выдачи: {item.issue}</p>
             <p>Продукты: {item.orderedProducts}</p>
             <p>ФИО получателя: {item.user}</p>
+            <p>Статус: {item.estatus}</p>
         </div>
-      </div>
+  {role==='ROLE_ADMIN' && item.estatus==='Новый'  &&  <button onClick={()=>{pressHandler(item.id)}} className="bg-black text-pink-800 w-32 rounded-full">Завершить</button>
+    }  </div>
     </div>
             </>
         ))}

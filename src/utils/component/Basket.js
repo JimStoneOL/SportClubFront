@@ -77,8 +77,8 @@ export const Basket=()=>{
 
     return(<>
     <div className="text-3xl text-center text-pink-500 font-bold">Корзина</div>
-    <button onClick={()=>setShowModal(true)} className="text-xl text-center text-pink-800 font-bold bg-black rounded-full w-64">Оформить</button>
-      <div class="my-12 mx-auto px-4 md:px-12">
+  { basketView.length>0 && <button onClick={()=>setShowModal(true)} className="text-xl text-center text-pink-800 font-bold bg-black rounded-full w-64">Оформить</button>
+ }     <div class="my-12 mx-auto px-4 md:px-12">
     <div class="items-center -mx-1 lg:-mx-4">
         <div class="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
         {basketView && basketView.map(item=>(<ProductCard data={item}/>))}

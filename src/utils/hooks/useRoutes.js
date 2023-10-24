@@ -54,7 +54,7 @@ export const useRoutes=(isAuthenticated,role)=>{
         return(
             <Switch>
             <Route path="/" exact>
-            <AuthPage/>  
+            <ProductPage/>  
             </Route>
             <Route path="/login" exact>
               <AuthPage/>  
