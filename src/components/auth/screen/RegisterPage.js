@@ -6,11 +6,13 @@ import { useHttp } from '../../../utils/hooks/http.hook'
 import { useMessage } from '../../../utils/hooks/message.hook'
 import logo from '../../../utils/img/logo.jpg'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import useLocalStorage from 'use-local-storage'
 
 export const RegisterPage=()=>{
 
 
   const auth = useContext(AuthContext)
+  const [user,setUser]=useLocalStorage("user", {})
   const message = useMessage()
   const history = useHistory()
   const {loading, request, error, clearError} = useHttp()
@@ -29,12 +31,9 @@ export const RegisterPage=()=>{
   }
 
   const registerHandler = async () => {
-    try {
-      const data = await request('http://localhost:8080/api/auth/signup', 'POST', {...form})
-      // console.log(data)
-      // message(data.message)
-      history.push('/')
-    } catch (e) {}
+    console.log(form)
+   setUser(form)
+  //  history.push('/login')
   }
     return(
       <div
@@ -43,19 +42,17 @@ export const RegisterPage=()=>{
       <div
         class="
           flex flex-col
-          bg-gray-800
           shadow-md
           px-4
           sm:px-6
           md:px-8
           lg:px-10
           py-8
-          rounded-3xl
           w-50
           max-w-md
         "
       >
-             <img src={logo}/>
+         
         <div class="font-medium self-center text-xl sm:text-3xl text-gray-800">
           Регистрация
         </div>
@@ -330,38 +327,12 @@ export const RegisterPage=()=>{
                 type="submit"
                 onClick={registerHandler}
                 class="
-                  flex
-                  mt-2
-                  items-center
-                  justify-center
-                  focus:outline-none
-                  text-white text-sm
-                  sm:text-base
-                  bg-rose-900
-                  hover:bg-rose-700
-                  rounded-2xl
-                  py-2
-                  w-full
-                  transition
-                  duration-150
-                  ease-in
+          
                 "
               >
-                <span class="mr-2 uppercase">Sign Up</span>
+                <span class="mr-2 uppercase">Зарегистрироваться</span>
                 <span>
-                  <svg
-                    class="h-6 w-6"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+             
                 </span>
               </button>
             </div>
@@ -381,11 +352,11 @@ export const RegisterPage=()=>{
           "
         >
           <span class="ml-2"
-            >Есть аккаунт?
+            > 
             <NavLink
               to="/login"
               class="text-xs ml-2 text-blue-500 font-semibold"
-              >тогда сюда</NavLink
+              >войти</NavLink
             ></span
           >
         </a>

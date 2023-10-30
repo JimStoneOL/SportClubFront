@@ -23,7 +23,6 @@ function App() {
       token, login, logout, userId, isAuthenticated, role
     }}>
       <Router>
-        <Navbar/>
         <div className="container">
           {routes}
           </div>

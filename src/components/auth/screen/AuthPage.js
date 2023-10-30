@@ -4,16 +4,20 @@ import { AuthContext } from '../../../utils/context/AuthContext'
 import { useHttp } from '../../../utils/hooks/http.hook'
 import { useMessage } from '../../../utils/hooks/message.hook'
 import logo from '../../../utils/img/logo.jpg'
+import useLocalStorage from 'use-local-storage'
 
 
 export const AuthPage = () => {
 
   const auth = useContext(AuthContext)
+  const [time,setTime]=useState("")
+  const [user,setUser]=useLocalStorage("user", {})
   const message = useMessage()
   const {loading, request, error, clearError} = useHttp()
   const [form, setForm] = useState({
     username: '', password: ''
   })
+  const [login,setLogin]=useState(false)
 
   useEffect(() => {
     message(error)
@@ -26,32 +30,44 @@ export const AuthPage = () => {
   }
 
   const loginHandler = async () => {
-    try {
-      const data = await request('http://localhost:8080/api/auth/signin', 'POST', {...form})
-      auth.login(data.token, data.id,data.roles)
-    } catch (e) {}
+    if(form.username===user.email && form.password===user.password){
+      setLogin(true)
+      var d = new Date(Date.now());
+      if(d.getHours()>=4 && d.getHours()<12){
+        setTime("Доброе утро "+user.lastname +" "+user.firstname+" "+user.middlename)
+      } else if(d.getHours()>=12 && d.getHours()<17){
+        setTime("Добрый день "+user.lastname +" "+user.firstname+" "+user.middlename)
+      } else{
+        setTime("Добрый вечер "+user.lastname +" "+user.firstname+" "+user.middlename)
+      }
+    }
   }
   
+  if(login){
+    return(<>
+   
+      {time}
+    </>)
+  }else{
     return (
       <div
       class="min-h-screen flex flex-col items-center justify-center"
     >
+       Сделано Тимуром Мурадовым
       <div
         class="
           flex flex-col
-          bg-gray-800
           shadow-md
           px-4
           sm:px-6
           md:px-8
           lg:px-10
           py-8
-          rounded-3xl
           w-50
           max-w-md
         "
       >
-        <img src={logo}/>
+     
         <div class="font-medium self-center text-xl sm:text-3xl text-gray-800">
           Авторизация
         </div>
@@ -87,15 +103,7 @@ export const AuthPage = () => {
                   name="username"
                   onChange={changeHandler}
                   class="
-                    text-sm
-                    placeholder-gray-500
-                    pl-10
-                    pr-4
-                    rounded-2xl
-                    border border-gray-400
-                    w-full
-                    py-2
-                    focus:outline-none focus:border-blue-400
+                   
                   "
                   placeholder="Введите свой email"
                 />
@@ -132,15 +140,7 @@ export const AuthPage = () => {
                   name="password"
                   onChange={changeHandler}
                   class="
-                    text-sm
-                    placeholder-gray-500
-                    pl-10
-                    pr-4
-                    rounded-2xl
-                    border border-gray-400
-                    w-full
-                    py-2
-                    focus:outline-none focus:border-blue-400
+             
                   "
                   placeholder="Введите свой пароль"
                 />
@@ -152,38 +152,12 @@ export const AuthPage = () => {
                 type="submit"
                 onClick={loginHandler}
                 class="
-                  flex
-                  mt-2
-                  items-center
-                  justify-center
-                  focus:outline-none
-                  text-white text-sm
-                  sm:text-base
-                  bg-rose-900
-                  hover:bg-rose-700
-                  rounded-2xl
-                  py-2
-                  w-full
-                  transition
-                  duration-150
-                  ease-in
+                 
                 "
               >
                 <span class="mr-2 uppercase">Войти</span>
                 <span>
-                  <svg
-                    class="h-6 w-6"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+               
                 </span>
               </button>
             </div>
@@ -203,7 +177,7 @@ export const AuthPage = () => {
           "
         >
           <span class="ml-2"
-            >нету аккаунта?
+            >
             <NavLink
               to="/register"
               class="text-xs ml-2 text-blue-500 font-semibold"
@@ -215,3 +189,5 @@ export const AuthPage = () => {
     </div>
     )
   }
+  }
+  
